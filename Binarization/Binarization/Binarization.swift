@@ -25,9 +25,9 @@ class Binarization {
         createThreshold()
     }
     
-    func makeBinarization() -> Image {
+    func makeBinarization(index: Int = 3) -> Image {
         createPyramidsAndThresholds()
-        return increaseContrastReltiveToThresholdMap(index: 3)
+        return increaseContrastReltiveToThresholdMap(index: index)
     }
     
     func createPyramids() {
@@ -204,14 +204,15 @@ class Binarization {
         }
         
         func debugPrint() {
-            print("-----------------------------------")
-            print("THRESHOLDS DONE")
-            for (index, map) in thresholds.enumerated() {
-                if debugOutput {
+            if debugOutput {
+                print("-----------------------------------")
+                print("THRESHOLDS DONE")
+                for (index, map) in thresholds.enumerated() {
                     Image(with: map).save(to: outputFolder + "thresholds_\(index).jpg")
                 }
+                print("-----------------------------------")
+
             }
-            print("-----------------------------------")
         }
     }
     
@@ -338,18 +339,18 @@ class Binarization {
         }
         
         func debugPrint() {
-            print("-----------------------------------")
-            print("TYEPE: \(type.rawValue.uppercased())")
-            print("LAYERS: \(layers?.count)")
-            if layers != nil {
-                for (index, layer) in layers!.enumerated() {
-                    print("INDEX: \(index), WIDTH: \(layer.width), HEIGHT: \(layer.height)")
-                    if debugOutput {
+            if debugOutput {
+                print("-----------------------------------")
+                print("TYEPE: \(type.rawValue.uppercased())")
+                print("LAYERS: \(layers?.count)")
+                if layers != nil {
+                    for (index, layer) in layers!.enumerated() {
+                        print("INDEX: \(index), WIDTH: \(layer.width), HEIGHT: \(layer.height)")
                         Image(with: layer).save(to: outputFolder + "\(type.rawValue.uppercased())_\(index).jpg")
                     }
                 }
+                print("-----------------------------------")
             }
-            print("-----------------------------------")
         }
     }
 }
